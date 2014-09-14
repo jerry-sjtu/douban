@@ -1,17 +1,25 @@
+//
+//  ViewController.swift
+//  douban
+//
+//  Created by qiang wang on 14-9-14.
+//  Copyright (c) 2014年 dcharm. All rights reserved.
+//
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
+class ChannelController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
@@ -20,7 +28,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
-        let cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "douban");
+        let cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "channel");
         return cell;
     }
     
@@ -33,6 +41,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     {
         
     }
-
+    
 }
 

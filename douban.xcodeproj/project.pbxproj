@@ -13,6 +13,11 @@
 		B585DFF819C5C77100620961 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B585DFF719C5C77100620961 /* Images.xcassets */; };
 		B585DFFB19C5C77100620961 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B585DFF919C5C77100620961 /* LaunchScreen.xib */; };
 		B585E00719C5C77100620961 /* doubanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B585E00619C5C77100620961 /* doubanTests.swift */; };
+		B585E01519C5C94700620961 /* btnChannel.png in Resources */ = {isa = PBXBuildFile; fileRef = B585E01119C5C94700620961 /* btnChannel.png */; };
+		B585E01619C5C94700620961 /* btnPlay.png in Resources */ = {isa = PBXBuildFile; fileRef = B585E01219C5C94700620961 /* btnPlay.png */; };
+		B585E01719C5C94700620961 /* detail.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B585E01319C5C94700620961 /* detail.jpg */; };
+		B585E01819C5C94700620961 /* logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B585E01419C5C94700620961 /* logo.jpg */; };
+		B585E01A19C5D5CD00620961 /* ChannelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B585E01919C5D5CD00620961 /* ChannelController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +41,11 @@
 		B585E00019C5C77100620961 /* doubanTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = doubanTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B585E00519C5C77100620961 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B585E00619C5C77100620961 /* doubanTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = doubanTests.swift; sourceTree = "<group>"; };
+		B585E01119C5C94700620961 /* btnChannel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btnChannel.png; sourceTree = "<group>"; };
+		B585E01219C5C94700620961 /* btnPlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btnPlay.png; sourceTree = "<group>"; };
+		B585E01319C5C94700620961 /* detail.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = detail.jpg; sourceTree = "<group>"; };
+		B585E01419C5C94700620961 /* logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = logo.jpg; sourceTree = "<group>"; };
+		B585E01919C5D5CD00620961 /* ChannelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,12 +87,14 @@
 		B585DFED19C5C77100620961 /* douban */ = {
 			isa = PBXGroup;
 			children = (
+				B585E01019C5C94700620961 /* images */,
 				B585DFF019C5C77100620961 /* AppDelegate.swift */,
 				B585DFF219C5C77100620961 /* ViewController.swift */,
 				B585DFF419C5C77100620961 /* Main.storyboard */,
 				B585DFF719C5C77100620961 /* Images.xcassets */,
 				B585DFF919C5C77100620961 /* LaunchScreen.xib */,
 				B585DFEE19C5C77100620961 /* Supporting Files */,
+				B585E01919C5D5CD00620961 /* ChannelController.swift */,
 			);
 			path = douban;
 			sourceTree = "<group>";
@@ -110,6 +122,17 @@
 				B585E00519C5C77100620961 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B585E01019C5C94700620961 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				B585E01119C5C94700620961 /* btnChannel.png */,
+				B585E01219C5C94700620961 /* btnPlay.png */,
+				B585E01319C5C94700620961 /* detail.jpg */,
+				B585E01419C5C94700620961 /* logo.jpg */,
+			);
+			path = images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -193,7 +216,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				B585DFF619C5C77100620961 /* Main.storyboard in Resources */,
+				B585E01619C5C94700620961 /* btnPlay.png in Resources */,
 				B585DFFB19C5C77100620961 /* LaunchScreen.xib in Resources */,
+				B585E01519C5C94700620961 /* btnChannel.png in Resources */,
+				B585E01819C5C94700620961 /* logo.jpg in Resources */,
+				B585E01719C5C94700620961 /* detail.jpg in Resources */,
 				B585DFF819C5C77100620961 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -214,6 +241,7 @@
 			files = (
 				B585DFF319C5C77100620961 /* ViewController.swift in Sources */,
 				B585DFF119C5C77100620961 /* AppDelegate.swift in Sources */,
+				B585E01A19C5D5CD00620961 /* ChannelController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
