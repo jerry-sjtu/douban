@@ -10,6 +10,9 @@ import UIKit
 
 class ChannelController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
+    @IBOutlet weak var tv: UITableView!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.

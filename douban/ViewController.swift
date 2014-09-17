@@ -1,11 +1,25 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, HttpProtocol{
 
+    @IBOutlet weak var iv: UIImageView!
+    @IBOutlet weak var tv: UITableView!
+    @IBOutlet weak var pv: UIProgressView!
+    @IBOutlet weak var playTime: UILabel!
+    
+    var eHttp:HttpController = HttpController()
+    
+    var tableData:NSArray = NSArray()
+    var channelData:NSArray = NSArray()
+    var imgCache = Dictionary<String, UIImage>()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        //设置了http的代理
+        eHttp.delegate = self
+        eHttp.onSearch("http://www.douban.com/j/app/radio/channels")
+        eHttp.onSearch("http://douban.fm/j/mine/playlist?channel=0")
     }
 
     override func didReceiveMemoryWarning() {
@@ -15,12 +29,32 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return 10;
+        return tableData.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         let cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "douban");
+        let rowData:NSDictionary = self.tableData[indexPath.row] as NSDictionary
+        cell.textLabel?.text = rowData["title"] as String
+        cell.detailTextLabel?.text = rowData["artist"] as String
+        cell.imageView?.image = UIImage(named: "detail.jpg")
+        let url = rowData["picture"] as String
+        println(url)
+        let img = self.imgCache[url]
+        if img == nil {
+            let imgUrl:NSURL = NSURL(string:url)
+            let request:NSURLRequest = NSURLRequest(URL: imgUrl)
+            NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {
+                (respond:NSURLResponse!, data:NSData!,error:NSError!)->Void in
+                let img = UIImage(data: data)
+                cell.imageView?.image = img
+                self.imgCache[url] = img
+            })
+        }
+        else {
+            cell.imageView?.image = img
+        }
         return cell;
     }
     
@@ -32,6 +66,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath)
     {
         
+    }
+    
+    func didRecieveResults(results:NSDictionary)
+    {
+        if results.objectForKey("song") != nil {
+            self.tableData = results["song"] as NSArray
+            self.tv.reloadData()
+        }
+        else if results.objectForKey("channels") != nil{
+            self.channelData = results["channels"] as NSArray
+            
+        }
     }
 
 }

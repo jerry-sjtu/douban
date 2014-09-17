@@ -65,6 +65,12 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="iv" destination="7ac-Uq-YZX" id="JKo-U2-gxv"/>
+                        <outlet property="playTime" destination="4dm-oV-Hdf" id="P3a-iC-iOa"/>
+                        <outlet property="pv" destination="Sw6-4W-hrg" id="CL4-WU-2dZ"/>
+                        <outlet property="tv" destination="fsI-w4-30S" id="gYT-1n-php"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
@@ -106,6 +112,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="tv" destination="F1B-uI-MqH" id="YPU-TN-4Mq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T6t-G2-p9w" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
