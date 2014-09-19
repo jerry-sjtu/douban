@@ -16,6 +16,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var channelData:NSArray = NSArray()
     var imgCache = Dictionary<String, UIImage>()
     var audioPlayer:MPMoviePlayerController = MPMoviePlayerController()
+    var timer:NSTimer?
     
     func onChangeChannel(channelId: String) {
         let url = "http://douban.fm/j/mine/playlist?\(channelId)"
@@ -29,6 +30,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         eHttp.delegate = self
         eHttp.onSearch("http://www.douban.com/j/app/radio/channels")
         eHttp.onSearch("http://douban.fm/j/mine/playlist?channel=0")
+        self.pv.progress = 0
     }
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
@@ -114,9 +116,43 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func onSetAudio(url:String)
     {
+        timer?.invalidate()
+        playTime.text = "00:00"
         self.audioPlayer.stop()
         self.audioPlayer.contentURL = NSURL(string:url)
         self.audioPlayer.play()
+        timer=NSTimer.scheduledTimerWithTimeInterval(0.4, target: self, selector: "onUpdate", userInfo: nil, repeats: true)
+    }
+    
+    func onUpdate()
+    {
+        let c = audioPlayer.currentPlaybackTime
+        if c > 0{
+            let t = audioPlayer.duration
+            let p:CFloat = CFloat(c/t)
+            pv.setProgress(p, animated: true)
+            
+            let second = Int(c) % 60
+            let minute = Int(c) / 60
+            var timeStr = ""
+            if minute < 10
+            {
+                timeStr = "0\(minute):"
+            }
+            else
+            {
+                timeStr = "\(minute):"
+            }
+            if second < 10 {
+                timeStr += "0\(second)"
+            }
+            else
+            {
+                timeStr += "\(second)"
+            }
+            playTime.text = timeStr
+        }
+        
     }
     
     func onSetImg(url:String)
