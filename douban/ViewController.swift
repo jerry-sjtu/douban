@@ -1,5 +1,6 @@
 
 import UIKit
+import MediaPlayer
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, HttpProtocol{
 
@@ -13,6 +14,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var tableData:NSArray = NSArray()
     var channelData:NSArray = NSArray()
     var imgCache = Dictionary<String, UIImage>()
+    var audioPlayer:MPMoviePlayerController = MPMoviePlayerController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,8 +38,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     {
         let cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "douban");
         let rowData:NSDictionary = self.tableData[indexPath.row] as NSDictionary
-        cell.textLabel?.text = rowData["title"] as String
-        cell.detailTextLabel?.text = rowData["artist"] as String
+        cell.textLabel?.text = rowData["title"] as String?
+        cell.detailTextLabel?.text = rowData["artist"] as String?
         cell.imageView?.image = UIImage(named: "detail.jpg")
         let url = rowData["picture"] as String
         println(url)
@@ -60,7 +62,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
-        self.dismissViewControllerAnimated(true , completion: nil);
+        let rowData:NSDictionary = self.tableData[indexPath.row] as NSDictionary
+        let audioUrl = rowData["url"] as String
+        let imgUrl = rowData["picture"] as String
+        onSetImg(imgUrl)
+        onSetAudio(audioUrl)
     }
     
     func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath)
@@ -73,10 +79,41 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if results.objectForKey("song") != nil {
             self.tableData = results["song"] as NSArray
             self.tv.reloadData()
+            
+            let firstDic:NSDictionary = self.tableData[0] as NSDictionary
+            let audioUrl = firstDic["url"] as String
+            let imgUrl = firstDic["picture"] as String
+            onSetAudio(audioUrl)
+            onSetImg(imgUrl)
         }
         else if results.objectForKey("channels") != nil{
             self.channelData = results["channels"] as NSArray
             
+        }
+    }
+    
+    func onSetAudio(url:String)
+    {
+        self.audioPlayer.stop()
+        self.audioPlayer.contentURL = NSURL(string:url)
+        self.audioPlayer.play()
+    }
+    
+    func onSetImg(url:String)
+    {
+        let img = self.imgCache[url] as UIImage?
+        if img == nil {
+            let imgUrl:NSURL = NSURL(string:url)
+            let request:NSURLRequest = NSURLRequest(URL: imgUrl)
+            NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {
+                (respond:NSURLResponse!, data:NSData!,error:NSError!)->Void in
+                let img = UIImage(data: data)
+                self.iv.image = img
+                self.imgCache[url] = img
+            })
+        }
+        else {
+             self.iv.image = img
         }
     }
 
