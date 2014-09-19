@@ -8,10 +8,16 @@
 
 import UIKit
 
+protocol ChannelProtocal {
+    func onChangeChannel(channelId:String)
+}
+
+
 class ChannelController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tv: UITableView!
-    
+    var channelData:NSArray = NSArray()
+    var delegate:ChannelProtocal?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,18 +32,24 @@ class ChannelController: UIViewController, UITableViewDataSource, UITableViewDel
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return 10;
+        return self.channelData.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
-        let cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "channel");
-        return cell;
+        let cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "channel")
+        let rowData:NSDictionary = self.channelData[indexPath.row] as NSDictionary
+        cell.textLabel?.text = rowData["name"] as String?
+        return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
-        self.dismissViewControllerAnimated(true , completion: nil);
+        let rowData:NSDictionary = self.channelData[indexPath.row] as NSDictionary
+        var s:String = rowData["channel_id"] as String
+        let channelId = "channel=\(s)"
+        delegate?.onChangeChannel(channelId)
+        self.dismissViewControllerAnimated(true , completion: nil)
     }
     
     func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath)

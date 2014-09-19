@@ -2,7 +2,7 @@
 import UIKit
 import MediaPlayer
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, HttpProtocol{
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, HttpProtocol, ChannelProtocal{
 
     @IBOutlet weak var iv: UIImageView!
     @IBOutlet weak var tv: UITableView!
@@ -15,6 +15,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var channelData:NSArray = NSArray()
     var imgCache = Dictionary<String, UIImage>()
     var audioPlayer:MPMoviePlayerController = MPMoviePlayerController()
+    
+    func onChangeChannel(channelId: String) {
+        let url = "http://douban.fm/j/mine/playlist?\(channelId)"
+        //println(url)
+        self.eHttp.onSearch(url)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,6 +96,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.channelData = results["channels"] as NSArray
             
         }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        var channelControl:ChannelController = segue.destinationViewController as ChannelController
+        channelControl.delegate = self
+        channelControl.channelData = self.channelData
     }
     
     func onSetAudio(url:String)
