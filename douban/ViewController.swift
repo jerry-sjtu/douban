@@ -10,6 +10,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var pv: UIProgressView!
     @IBOutlet weak var playTime: UILabel!
     
+    @IBOutlet weak var btnPlay: UIImageView!
+    @IBOutlet var tap: UITapGestureRecognizer! = nil
+    
     var eHttp:HttpController = HttpController()
     
     var tableData:NSArray = NSArray()
@@ -24,6 +27,24 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.eHttp.onSearch(url)
     }
     
+    @IBAction func onTap(sender: UITapGestureRecognizer) {
+        if sender.view == btnPlay
+        {
+            btnPlay.hidden = true
+            audioPlayer.play()
+            btnPlay.removeGestureRecognizer(tap)
+            iv.addGestureRecognizer(tap)
+        }
+        else if sender.view == iv
+        {
+            btnPlay.hidden = false
+            audioPlayer.pause()
+            btnPlay.addGestureRecognizer(tap)
+            iv.removeGestureRecognizer(tap)
+        }
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //设置了http的代理
@@ -31,6 +52,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         eHttp.onSearch("http://www.douban.com/j/app/radio/channels")
         eHttp.onSearch("http://douban.fm/j/mine/playlist?channel=0")
         self.pv.progress = 0
+        iv.addGestureRecognizer(tap)
     }
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
@@ -122,6 +144,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.audioPlayer.contentURL = NSURL(string:url)
         self.audioPlayer.play()
         timer=NSTimer.scheduledTimerWithTimeInterval(0.4, target: self, selector: "onUpdate", userInfo: nil, repeats: true)
+        btnPlay.removeGestureRecognizer(tap)
+        iv.addGestureRecognizer(tap)
+        btnPlay.hidden = true
     }
     
     func onUpdate()
