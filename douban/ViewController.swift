@@ -1,6 +1,7 @@
 
 import UIKit
 import MediaPlayer
+import QuartzCore
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, HttpProtocol, ChannelProtocal{
 
@@ -28,6 +29,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         eHttp.delegate = self
         eHttp.onSearch("http://www.douban.com/j/app/radio/channels")
         eHttp.onSearch("http://douban.fm/j/mine/playlist?channel=0")
+    }
+    
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        cell.layer.transform = CATransform3DMakeScale(0.1, 0.1, 1)
+        UIView.animateWithDuration(0.25, animations: {
+            cell.layer.transform = CATransform3DMakeScale(1, 1, 1)
+        })
     }
 
     override func didReceiveMemoryWarning() {
